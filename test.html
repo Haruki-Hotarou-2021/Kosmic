@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phaser Example with Touch Panning</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    canvas { 
+      display: block;
+      position: fixed;
+      width: 1000px;
+      height: 1000px;
+      transform: translate(50% 50%);
+    }
+  </style>
+</head>
+<body>
+  <script>
+    let blocks = [];
+    let sceneIsRunning = false; // Variável para controlar o estado da cena
+
+    function drawGrid(scene) {
+      const gridGraphics = scene.add.graphics();
+      gridGraphics.lineStyle(2, 0xaaaaaa, 0.5);
+
+      const gridSize = 20;
+      const width = scene.scale.width;
+      const height = scene.scale.height;
+
+      for (let x = -500; x <= 500; x += gridSize) {
+        gridGraphics.moveTo(x, -500);
+        gridGraphics.lineTo(x, 500);
+      }
+
+      for (let y = -500; y <= 500; y += gridSize) {
+        gridGraphics.moveTo(-500, y);
+        gridGraphics.lineTo(500, y);
+      }
+
+      gridGraphics.strokePath();
+      return gridGraphics;
+    }
+
+    function adicionarCuboPhaser(scene, x = 0, y = 0) {
+      if (!sceneIsRunning) {
+        let width = 50;
+        let height = 50;
+        const graphics = scene.add.graphics({ x: (x - width / 2) + (innerWidth / 2), y: (-y - height / 2) + (innerHeight / 2) });
+        graphics.fillStyle(0xffff00, 1.0);
+        graphics.fillRect(0, 0, width, height);
+
+        graphics.setInteractive(new Phaser.Geom.Rectangle(0, 0, 50, 50), Phaser.Geom.Rectangle.Contains);
+        scene.input.setDraggable(graphics);
+
+        scene.physics.add.existing(graphics);
+        graphics.body.setGravityY(0);
+        graphics.body.setAllowGravity(false);
+
+        graphics.isStatic = false;
+
+        graphics.on('pointerdown', function (pointer) {
+          this.setTint(0xff0000);
+        });
+
+        graphics.on('pointerup', function (pointer) {
+          this.clearTint();
+        });
+
+        graphics.on('drag', function (pointer, dragX, dragY) {
+          this.x = dragX;
+          this.y = dragY;
+        });
+
+        blocks.push(graphics);
+      } else {
+        console.log("Não é possível adicionar cubos enquanto a cena está em execução.");
+      }
+    }
+
+    class MyScene extends Phaser.Scene {
+      constructor() {
+        super({ key: 'MyScene' });
+      }
+
+      preload() {}
+
+      create() {
+        this.gridGraphics = drawGrid(this);
+
+        for (let block of blocks) {
+          this.add.existing(block);
+          this.physics.add.existing(block);
+          block.body.setGravityY(0);
+          block.body.setAllowGravity(false);
+        }
+
+        let dragging = false;
+        let lastX, lastY;
+
+        this.input.on('pointerdown', function(pointer) {
+          dragging = true;
+          lastX = pointer.x;
+          lastY = pointer.y;
+        });
+
+        this.input.on('pointermove', function(pointer) {
+          if (dragging) {
+            const dx = pointer.x - lastX;
+            const dy = pointer.y - lastY;
+            this.cameras.main.scrollX -= dx;
+            this.cameras.main.scrollY -= dy;
+            lastX = pointer.x;
+            lastY = pointer.y;
+          }
+        }, this);
+
+        this.input.on('pointerup', function(pointer) {
+          dragging = false;
+        });
+      }
+
+      update() {}
+    }
+
+    const config = {
+      type: Phaser.AUTO,
+      width: 800,
+      height: 600,
+      scene: MyScene,
+      physics: {
+        default: 'arcade',
+        arcade: {
+          gravity: { y: 0 },
+          debug: false
+        }
+      }
+    };
+
+    const game = new Phaser.Game(config);
+
+    function addCubeToPhaserScene() {
+      const scene = game.scene.getScene('MyScene');
+      if (scene) {
+        adicionarCuboPhaser(scene);
+      }
+    }
+
+    function startScene() {
+      const scene = game.scene.getScene('MyScene');
+      if (scene) {
+        sceneIsRunning = true;
+        scene.cameras.main.centerOn(400, 300);
+        if (scene.gridGraphics) {
+          scene.gridGraphics.clear();
+        }
+        for (let block of blocks) {
+          if (!block.isStatic) {
+            block.body.setGravityY(300);
+            block.body.setAllowGravity(true);
+            block.disableInteractive(); // Desativa a interatividade
+          }
+        }
+      }
+    }
+
+    function pauseScene() {
+      const scene = game.scene.getScene('MyScene');
+      if (scene) {
+        sceneIsRunning = false;
+        scene.scene.restart();
+      }
+    }
+
+    window.startScene = startScene;
+    window.pauseScene = pauseScene;
+    window.addCubeToPhaserScene = addCubeToPhaserScene;
+    
+    
+  </script>
+</body>
+</html>
