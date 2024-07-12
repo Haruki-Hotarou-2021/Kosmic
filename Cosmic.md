@@ -12,98 +12,9 @@ Adicione o arquivo kodoma.js ao seu projeto HTML, acima do arquivo do seu jogo:
 <script src="game.js"></script>
 ```
 
-## Funções e Classes
+# Funções e Classes
 
-### `setBackground(img, repeatX, repeatY)`
-
-Define a imagem de fundo da tela.
-
-**Parâmetros:**
-- `img`: URL da imagem de fundo.
-- `repeatX`: Número de repetições horizontais (O padrão é 1)
-- `repeatY`: Número de repetições verticais (O padrão é 1)
-
-**Exemplo:**
-```javascript
-setBackground('background.jpg', 2, 3);
-```
-
-### `limit(scale)`
-
-Configura os limites da tela.
-
-**Parâmetros:**
-- `scale`: Escala da tela (O padrão é 0.5)
-
-**Exemplo:**
-```javascript
-limit(0.8);
-```
-
-### `screen`
-
-Objeto que gerencia a tela.
-
-**Métodos:**
-- `scale(scale)`: Ajusta a escala da tela.
-- `width`: Largura da tela.
-- `height`: Altura da tela.
-
-**Exemplo:**
-```javascript
-screen.scale(1.2);
-screen.width;
-screen.height;
-```
-
-### `preloadScene(pageName)`
-
-Pré-carrega uma página HTML.
-
-**Parâmetros:**
-- `pageName`: Nome da página.
-
-**Exemplo:**
-```javascript
-preloadScene('level1');
-```
-
-### `startScene(pageName)`
-
-Troca de tela para uma nova página HTML.
-
-**Parâmetros:**
-- `pageName`: Nome da página.
-
-**Exemplo:**
-```javascript
-startScene('level2');
-```
-
-### `save(key, value)`
-
-Salva dados localmente.
-
-**Parâmetros:**
-- `key`: Chave de identificação dos dados.
-- `value`: Valor dos dados.
-
-**Exemplo:**
-```javascript
-save('playerScore', 100);
-```
-
-### `load(key)`
-
-Carrega dados salvos localmente.
-
-**Parâmetros:**
-- `key`: Chave de identificação dos dados.
-
-**Exemplo:**
-```javascript
-const score = load('playerScore');
-```
+## Classes
 
 ### Classe `Rect`
 
@@ -235,6 +146,8 @@ const particle1 = new Particle(100, 100, 10, 'orange', 1000, 45);
 particle1.display();
 ```
 
+# Funções
+
 ### `TIC(dt)`
 Função chamada em cada frame do jogo.
 
@@ -256,6 +169,97 @@ Limpa a tela.
 **Exemplo:**
 ```javascript
 cls();
+```
+
+### `setBackground(img, repeatX, repeatY)`
+
+Define a imagem de fundo da tela.
+
+**Parâmetros:**
+- `img`: URL da imagem de fundo.
+- `repeatX`: Número de repetições horizontais (O padrão é 1)
+- `repeatY`: Número de repetições verticais (O padrão é 1)
+
+**Exemplo:**
+```javascript
+setBackground('background.jpg', 2, 3);
+```
+
+### `limit(scale)`
+
+Configura os limites da tela.
+
+**Parâmetros:**
+- `scale`: Escala da tela (O padrão é 0.5)
+
+**Exemplo:**
+```javascript
+limit(0.8);
+```
+
+### `screen`
+
+Objeto que gerencia a tela.
+
+**Métodos:**
+- `scale(scale)`: Ajusta a escala da tela.
+- `width`: Largura da tela.
+- `height`: Altura da tela.
+
+**Exemplo:**
+```javascript
+screen.scale(1.2);
+screen.width;
+screen.height;
+```
+
+### `preloadScene(pageName)`
+
+Pré-carrega uma página HTML.
+
+**Parâmetros:**
+- `pageName`: Nome da página.
+
+**Exemplo:**
+```javascript
+preloadScene('level1');
+```
+
+### `startScene(pageName)`
+
+Troca de tela para uma nova página HTML.
+
+**Parâmetros:**
+- `pageName`: Nome da página.
+
+**Exemplo:**
+```javascript
+startScene('level2');
+```
+
+### `save(key, value)`
+
+Salva dados localmente.
+
+**Parâmetros:**
+- `key`: Chave de identificação dos dados.
+- `value`: Valor dos dados.
+
+**Exemplo:**
+```javascript
+save('playerScore', 100);
+```
+
+### `load(key)`
+
+Carrega dados salvos localmente.
+
+**Parâmetros:**
+- `key`: Chave de identificação dos dados.
+
+**Exemplo:**
+```javascript
+const score = load('playerScore');
 ```
 
 ### `loadLib(script)`
