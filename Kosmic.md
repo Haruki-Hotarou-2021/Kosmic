@@ -352,20 +352,20 @@ camera(mySprite, 5);
 ```javascript
 
 // Cria os objetos
-const player = new Spr(0, 20, 50, 50, '/RPG Demo/img/player.png')
+const player = new Spr(0, 20, 50, 50, 'player.png');
 player.z = 10;
-camera(player, 20)
+camera(player, 20);
 
-const right = new Rect(50, -150, 50, 50, 'green')
+const right = new Rect(50, -150, 50, 50, 'green');
 right.ui = true;
 
-const left = new Rect(-50, -150, 50, 50, 'green')
+const left = new Rect(-50, -150, 50, 50, 'green');
 left.ui = true;
 
-const up = new Rect(0, -100, 50, 50, 'green')
+const up = new Rect(0, -100, 50, 50, 'green');
 up.ui = true;
 
-const down = new Rect(0, -200, 50, 50, 'green')
+const down = new Rect(0, -200, 50, 50, 'green');
 down.ui = true;
 
 // Loop do jogo
@@ -373,11 +373,11 @@ function TIC() {
   cls(); // Limpa a tela
   
   // Deseja os objetos
-  player.display()
-  right.display()
-  left.display()
-  up.display()
-  down.display()
+  player.display();
+  right.display();
+  left.display();
+  up.display();
+  down.display();
   
   // Move o player
   move(speed);
