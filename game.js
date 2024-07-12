@@ -22,7 +22,7 @@ right.ui = true;
 const down = new Rect(w * 0.2, h * -0.4, 100, 100, 'green')
 //down.ui = true;
 
-const up = new Rect(w * 0.2, down.y + 100, 50, 50, 'green')
+const up = new Rect(w * 0.2, down.y + 150, 100, 100, 'green')
 //up.ui = true;
 
 const baseII = new Spr(1800, 0, 100, 80, 'img/BaseII.png')
@@ -60,9 +60,9 @@ function TIC() {
   // Limpa a tela
   cls()
   //screen.debug()
-  bgX = -player.x/10;
-  bgY = player.y/10;
-  //bgPosition(bgX, bgY)
+  bgX = -player.x/60;
+  bgY = player.y/60;
+  bgPosition(bgX, bgY)
   
   // Desenha os objetos
   player.display()
