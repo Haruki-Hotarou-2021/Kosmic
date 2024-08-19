@@ -88,3 +88,34 @@ function cls() {
     mainElement.removeChild(bodyChildren[i]);
   }
 }
+
+
+function loadFont(font) {
+
+  let url = font;
+  let fontName = url.split('/').pop().split('.')[0]; // Obtém o nome da fonte a partir da URL
+  let fontFace;
+
+  // Verifica se a URL termina com .ttf, .woff, .woff2, etc.
+  if (url.endsWith('.ttf')) {
+    fontFace = `@font-face {
+    font-family: '${fontName}';
+    src: url('${url}') format('truetype');
+  }`;
+  } else if (url.endsWith('.woff')) {
+    fontFace = `@font-face {
+    font-family: '${fontName}';
+    src: url('${url}') format('woff');
+  }`;
+  } else if (url.endsWith('.woff2')) {
+    fontFace = `@font-face {
+    font-family: '${fontName}';
+    src: url('${url}') format('woff2');
+  }`;
+  }
+
+  // Adiciona a regra @font-face ao estilo
+  style.appendChild(document.createTextNode(fontFace));
+  // Adiciona o estilo ao cabeçalho do documento
+  document.head.appendChild(style);
+}
